@@ -1,0 +1,33 @@
+/* missing in template1 */
+.university-lp .navbar, .university-lp .page-footer {
+    background-color: #1C2A48;
+  }
+  
+  
+  
+ 
+
+  @media (min-width: 560px) and (max-width: 740px) {
+  
+ 
+    .jarallax {
+      height: 500px;
+    }
+  }
+  
+  @media (min-width: 800px) and (max-width: 850px) {
+  
+    
+    .jarallax {
+      height: 600px;
+    }
+  }
+  
+  @media  (min-width: 850px) {
+  
+    
+    .jarallax {
+      height: 100vh;
+    }
+  }
+  
