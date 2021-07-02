@@ -1,0 +1,100 @@
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
+import TagFacesIcon from '@material-ui/icons/TagFaces';
+import { Mmenu } from '../../../myLib';
+import { Avatar, Checkbox, FormControlLabel, IconButton } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+ 
+ 
+ 
+export  function Mclip(props) {
+   
+  const {showAvatar,value,setValue,names,button,error} = props
+ 
+   
+  const handleDelete = (i) => {
+    value.splice(i,1)
+     setValue([...value])
+   };
+
+  const  addFromMenu = (e)=>{
+     
+     setValue([...value,e.target.name])
+ 
+  }
+
+  return (
+ 
+
+    <div style={{widht:"100%" ,display:"flex" ,flexDirection:"column",height:"100%"  }}>
+        
+        <Mmenu 
+        value={
+            {
+                button: button ,
+                list:names.map(v=>{
+                    
+                    let check = false
+                    let disable = false
+                    value.map(v2=>{ if(v2 == v.id  ){ check = true ;disable = true } })
+
+                    return <FormControlLabel
+                                control= {  
+                                    <Checkbox 
+                                        defaultChecked= {check} 
+                                        color="primary"  
+                                        inputProps={{ 'aria-label': 'secondary checkbox' }} 
+                                        disabled={disable}
+                                        name={v.id}
+                                        onChange={(e)=>addFromMenu(e)}
+                                    /> 
+                                }
+                                label={v.name}  
+                                style={{padding:"5px",}}
+
+ 
+
+                            />
+                })
+            }
+        } 
+        />
+
+
+
+
+
+        <div key={Math.random()} style={{overflow:"auto",border:"1px solid #939393a1",minHeight:"50px" ,maxHeight:"100px",padding:"5px"}}>
+
+            {value.map((v,i) => {
+
+               return names.map(v2=>{
+                      if( parseInt(v) == v2.id){
+
+                         return (
+                            <Chip avatar={showAvatar&&<Avatar>{v2.name[0]}</Avatar>} label={v2.name} onDelete={()=>handleDelete(i)} />                        
+                         );
+                    }
+                })
+                
+           
+            })}
+
+
+        </div>
+        <span style={{color:"red"}}>{error}</span>
+
+
+
+    
+    </div>
+
+ 
+
+
+  );
+}
+
+ 

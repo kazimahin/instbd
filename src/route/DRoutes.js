@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import DashPages from '../dash_pages/';
-import Header from "../components/header/";
+import {MHeader} from "../components/myLib";
 
 
 import { Switch , Route} from "react-router-dom"
@@ -9,13 +9,35 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import { makeStyles } from '@material-ui/core';
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
  
  
 function DRoutes(props) {
 
   const r_state = useSelector(state=>state)
+  const dispatch = useDispatch()
 
+
+ 
+  if(r_state.SetSession.current == null){
+ 
+
+
+    r_state.WebBasic.value.session.map((v,index)=>{
+      const startdate = new Date(v.start).getTime()
+      const enddate = new Date(v.end).getTime()
+      const today = new Date().getTime()
+
+
+ 
+      if( startdate  < today  && today < enddate){
+        dispatch({type:"SetSession" , payload:{current:{...v,index},today:{...v,index}}})
+ 
+      }
+ 
+    })
+
+  }
 
   
 
@@ -77,22 +99,25 @@ function DRoutes(props) {
 
   return (
     
-        <Header value={headerValue}  >
+        <MHeader value={headerValue}  >
           <Switch>
             {         
                 headerValue.links.dash.map((value,index)=>{
                     if(value.permission.read){
                       if (Array.isArray(value.link)   ) {
-                        return( value.link.map((value2,index)=> value2.permission.read && <Route key={index} path={value2.link} exact component={DashPages[value2.name]}  ></Route> ) )
+                        return( value.link.map((value2,index)=> value2.permission.read && <Route key={index} path={value2.link}  component={DashPages[value2.name]} exact={value2.exact } ></Route> ) )
                       }else {
-                       return <Route key={index} path={value.link} exact component={DashPages[value.name]}  ></Route>
+
+                          return <Route key={index} path={value.link} component={DashPages[value.name]} exact={value.exact }   ></Route>
+ 
+
                       }
                     }
                     
                 })
             }
           </Switch>
-        </Header>
+        </MHeader>
     );
 }
 

@@ -1,5 +1,5 @@
-import axios from "axios"
-axios.defaults.withCredentials = true
+import {server} from "../../functions/axios"
+
 
 
 
@@ -11,7 +11,7 @@ const UserAuth=   ()=>{
 
 
 
-          axios.post(window.location.origin+"/api/web/auth/verify",{},{withCredentials:true} )
+        server.post("/auth/verify",{} )
         .then(  value=>{ 
             console.log(value);
              dispatch({

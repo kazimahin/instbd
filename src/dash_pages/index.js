@@ -1,11 +1,20 @@
-import Dashbord from  "../dash_pages/dashbord/Dashbord"
-import Admin from "../dash_pages/user/Admin"
-import Subject from "../dash_pages/academic/Subject"
-import Class_ from "../dash_pages/academic/Class"
-import Event from "../dash_pages/academic/Event"
-import Notice from "../dash_pages/academic/Notice"
-import Student from "../dash_pages/user/Student"
- 
+import Dashbord from  "./dashbord/"
+
+import Subject from "./academic/subject"
+import Class_ from "./academic/class"
+import Event from "./academic/event"
+import Syllabus from "./academic/syllabus"
+import Session from "./academic/session"
+import Notice from "./academic/notice"
+import Routine from "./academic/routine"
 
 
- export default {Dashbord,Admin,Subject,Class:Class_,Event,Notice,Student}
+
+import Student from "./user/student/"
+import Employee from "./user/employee/"
+import Admin from "./user/admin"
+import Parents from "./user/parents"
+
+
+
+ export default {Dashbord,Admin ,Parents,Subject,Class:Class_,Event,Notice,Student ,Employee ,Syllabus,Session ,Notice,Event ,Routine}

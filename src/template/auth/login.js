@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 import {connect} from "react-redux"
 import UserAuth from '../../redux/actions/UserAuth.action';  
 
-import axios from "axios"
+import {server} from "../../functions/axios"
 import { Redirect } from 'react-router-dom';
- class Login extends Component {
+
+class Login extends Component {
 
     state={
         email:"",
@@ -25,7 +26,7 @@ import { Redirect } from 'react-router-dom';
     submitHandler=(e)=>{
 
         e.preventDefault()
-        axios.post(window.location.origin+"/api/web/auth/login",{email: this.state.email, password: this.state.password,catagory:this.state.catagory},{withCredentials:true})
+        server.post("/auth/login",{email: this.state.email, password: this.state.password,catagory:this.state.catagory},{withCredentials:false})
             .then(v=>{
                 this.setState({
                     error:{value:null,err:{}},

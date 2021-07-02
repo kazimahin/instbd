@@ -1,13 +1,7 @@
-import axios from "axios"
+import {server} from "../../functions/axios"
  
 
-
-const subdomain_in_dev = window.location.host.split('.')[0] 
-const domain =( process.env.REACT_APP_MODE === "DEV")? 
-
-                                                subdomain_in_dev+"."+process.env.REACT_APP_DOMAIN
-                                                    : 
-                                                document.location.host
+ 
 
  
 const WebBasic=()=>{
@@ -15,7 +9,7 @@ const WebBasic=()=>{
 
         
  
-        axios.post(window.location.origin+"/api/web/site/basic",{domain},{withCredentials:true} )
+        server.post("/site/basic" )
         .then(value=>{
              if(value != null){
                  dispatch({

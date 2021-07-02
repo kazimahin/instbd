@@ -14,8 +14,10 @@ import UserAuth from './redux/actions/UserAuth.action';
 import WebBasic from './redux/actions/WebBasic.action';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
-import { blue ,green } from '@material-ui/core/colors';
- 
+import { blue ,green, orangez } from '@material-ui/core/colors';
+import {server} from "./functions/axios"
+server.defaults.headers.mahin = "mahin"
+
    
 class App extends Component {
  
@@ -23,20 +25,22 @@ class App extends Component {
      componentDidMount(){
        this.props.WebBasic()
        this.props.UserAuth()
-      
+
     } 
     
   
 
 
     render() {
-
+      // server.defaults.headers.mahin = "asdf"
        
       const theme= createMuiTheme({
         palette:{
-          type:"dark",
+          // type:"dark",
           primary:{
-            main:green[500]
+            main:blue[500],
+            light:blue[100],
+            dark:blue[900]
           }
           
         }
