@@ -30,7 +30,7 @@ export default function TimePicker(props) {
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             
-            <KeyboardTimePicker style={{width:"100%"}} variant="inline" inputVariant={variant ? variant :"standard"} 
+            <KeyboardTimePicker  variant="inline" inputVariant={variant ? variant :"standard"} 
                 margin="normal"
                 id="time-picker"
                 label={label}
@@ -45,7 +45,7 @@ export default function TimePicker(props) {
                 {...other}
                 
             />
-             <p style={{color:"#f44336",float:"left" ,fontSize:"0.75rem"}}>{error && error}</p>
+            <p className="short_error">{error && error}</p>
         </MuiPickersUtilsProvider>
     )
 }

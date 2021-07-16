@@ -3,6 +3,7 @@ import { MarkunreadSharp } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,Mroutine,MSelect,MSnackbar,MuseForm} from "../../../components/myLib"
+import { objectToSelectValue } from '../../../functions'
 
 
 
@@ -27,6 +28,25 @@ function AddRoutine(props) {
     }
     
  
+
+    const [fetchData, setfetchData] = useState({
+        subject:[],
+        teacher:[]
+    })
+
+    useEffect( async ()=>{
+      let subject = await  axios.get("/api/web/const/subject")
+            .then(v=>{
+               return v.data.value
+            })
+            .catch(e=>{
+                setmessage({status:e.response.status ,message:"Server Error Occured"})
+            })
+        
+        setfetchData({subject,teacher: await objectToSelectValue("user","employee")})
+
+    },[])
+
 
     const [loading1,setloading1] = useState(false)
     const [message,setmessage] = useState()
@@ -94,15 +114,7 @@ function AddRoutine(props) {
         
       ]
     
-    
-      const subject = [
-        {value:"bangla",title:"bangla"},
-        {value:"english",title:"english"},
-        {value:"math",title:"math"},
-        {value:"chemisty",title:"chemisty"},
-        {value:"physicsf",title:"physicsf"},
-      ]
-
+     
       const setRoutineValue =(value)=>{
             setValues({
                 ...values,
@@ -139,8 +151,8 @@ function AddRoutine(props) {
 
                             data={values.value}
                             setData={setRoutineValue}
-                            subject={subject}
-                            teacher={teacher}
+                            subject={fetchData.subject}
+                            teacher={fetchData.teacher}
 
                         />
                     </Grid>

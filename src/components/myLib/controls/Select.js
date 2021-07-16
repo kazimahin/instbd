@@ -6,7 +6,7 @@ export default function Select(props) {
     const { name, label, value,error=null, onChange, options ,variant } = props;
 
     return (
-        <FormControl style={{width:"100%"}}  variant={variant ? variant :"standard"}
+        <FormControl   variant={variant ? variant :"standard"}
         {...(error && {error:true})}>
             <InputLabel>{label}</InputLabel>
             <MuiSelect
@@ -21,7 +21,7 @@ export default function Select(props) {
                     )
                 }
             </MuiSelect>
-            {error && <FormHelperText>{error}</FormHelperText>}
+            <p className="short_error">{error && error}</p>
         </FormControl>
     )
 }

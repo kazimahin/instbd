@@ -2,7 +2,7 @@ import { Button, CircularProgress, Grid, Typography } from '@material-ui/core'
 import { MarkunreadSharp } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useState } from 'react'
-import {MDatePicker, MForm, MInput, MRadio,MSelect,MSnackbar,MuseForm} from "../../../components/myLib"
+import {MDatePicker, MForm, MInput, MRadio,MselectSearch,MSnackbar,MuseForm} from "../../../components/myLib"
 
 // name ,qualification ,birth ,phone ,phone2 ,email ,nid ,nationality ,gender ,religion ,blood ,p_address ,p_city ,p_zip ,c_address ,c_city ,c_zip ,password 
 
@@ -203,7 +203,7 @@ function AddAdmin(props) {
                     </Grid>
 
                     <Grid item xs={12} sm={4} >
-                        <MSelect 
+                        <MselectSearch 
                             label="Religion"
                             name="religion"
                             value={values.religion}
@@ -216,11 +216,11 @@ function AddAdmin(props) {
                                 {value:"Christianity",title:"Christianity"},
                             ]}
                         >
-                        </MSelect>
+                        </MselectSearch>
                     </Grid>
 
                     <Grid item xs={12} sm={4} >
-                        <MSelect
+                        <MselectSearch
                             label="Blood"
                             name="blood"
                             value={values.blood}
@@ -239,7 +239,7 @@ function AddAdmin(props) {
                                 
                             ]}
                         >
-                        </MSelect>
+                        </MselectSearch>
                     </Grid>
                               
                 </Grid>

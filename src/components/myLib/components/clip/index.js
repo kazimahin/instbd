@@ -41,14 +41,15 @@ export function Mclip(props) {
             {option.title}
             </React.Fragment>
         )}
-        style={{ width: 500 }}
+         
         renderInput={(params) => (
             <TextField {...params} variant="standard" label={label} placeholder="Favorites" />
         )}
 
         onChange= {(e,newValue)=>onChange(e,newValue)}
         />
-        <span style={{color:"red"}}>{error}</span>
+        <p className="short_error">{error && error}</p>
+
     </div>
   );
 }

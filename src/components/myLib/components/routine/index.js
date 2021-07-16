@@ -10,12 +10,14 @@ import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
 import { Button, Grid, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { MSelect, MTimePicker } from '../../';
+import { MselectSearch, MTimePicker } from '../../';
 
 import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CachedIcon from '@material-ui/icons/Cached';
 import DoneIcon from '@material-ui/icons/Done';
+import {valueToTitle} from "../../../../functions"
+
 
 export  function Mroutine(props) {
   let hcolor = props.hcolor
@@ -199,9 +201,10 @@ console.log(tempvalue.end);
 
                                 {(!onoff[i.toString()+i2.toString()]) ?
                                   <div  style={{textAlign:"center"}}>
-                                    {data[v][i2].subject}
+                                    {/* subject value to title  */}
+                                    {valueToTitle(props.subject,data[v][i2].subject)}
                                     <br></br>
-                                    {data[v][i2].teacher}
+                                    {valueToTitle(props.teacher,data[v][i2].teacher)}
                                     <br></br>
                                     { new Date(data[v][i2].start).toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3") +" - "+ new Date(data[v][i2].end).toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3") }
                                     <br></br>
@@ -210,9 +213,9 @@ console.log(tempvalue.end);
                                   </div>
                                 :
                                   <div>
-                                    <Grid style={{minWidth:"200px",display:"flex" ,padding:"5px",maxWidth:"200px",margin:"0 auto"}} container>
+                                    <Grid style={{minWidth:"200px",display:"flex" ,padding:"5px",maxWidth:"250px",margin:"0 auto"}} container>
                                       <Grid item xs={12}>
-                                        <MSelect
+                                        <MselectSearch
                                          
                                         name="subject"
                                         label="Subject"
@@ -221,10 +224,10 @@ console.log(tempvalue.end);
                                         options={props.subject}
                                         error={tempvalueerr.subject}
 
-                                        ></MSelect>
+                                        ></MselectSearch>
                                       </Grid>
                                       <Grid item xs={12}>
-                                        <MSelect
+                                        <MselectSearch
                                          
                                         name="teacher"
                                         label="Teacher"
@@ -233,7 +236,7 @@ console.log(tempvalue.end);
                                         options={props.teacher}
                                         error={tempvalueerr.teacher}
 
-                                        ></MSelect>
+                                        ></MselectSearch>
                                       </Grid>
                                       <Grid item xs={12}>
                                         <MTimePicker
@@ -266,7 +269,7 @@ console.log(tempvalue.end);
                                           <DeleteIcon></DeleteIcon>
                                         </IconButton>
 
-                                        <IconButton disabled={ Object.keys(tempvalueerr).length !== 0}  style={{padding:"5px"}} aria-label="" onClick={()=>fieldSubmit(i,i2)}  >
+                                        <IconButton  type="submit"  disabled={ Object.keys(tempvalueerr).length !== 0}  style={{padding:"5px"}} aria-label="" onClick={()=>fieldSubmit(i,i2)}  >
                                           <DoneIcon></DoneIcon>
                                         </IconButton>
 
@@ -289,9 +292,9 @@ console.log(tempvalue.end);
                                 </div>
                                 :
                                   <div>
-                                    <Grid  style={{minWidth:"140px",display:"flex" ,padding:"5px",maxWidth:"200px",margin:"0 auto"}} container>
+                                    <Grid  style={{minWidth:"200px",display:"flex" ,padding:"5px",maxWidth:"250px",margin:"0 auto"}} container>
                                       <Grid item xs={12}>
-                                        <MSelect
+                                        <MselectSearch
                                          
                                           name="subject"
                                           label="Subject"
@@ -300,10 +303,10 @@ console.log(tempvalue.end);
                                           options={props.subject}
                                           error={tempvalueerr.subject}
 
-                                        ></MSelect>
+                                        ></MselectSearch>
                                       </Grid>
                                       <Grid item xs={12}>
-                                        <MSelect
+                                        <MselectSearch
                                          
                                         name="teacher"
                                         label="Teacher"
@@ -312,7 +315,7 @@ console.log(tempvalue.end);
                                         options={props.teacher}
                                         error={tempvalueerr.teacher}
 
-                                        ></MSelect>
+                                        ></MselectSearch>
                                       </Grid>
                                       <Grid item xs={12}>
                                         <MTimePicker
@@ -345,7 +348,7 @@ console.log(tempvalue.end);
                                           <CachedIcon></CachedIcon>
                                         </IconButton>
 
-                                        <IconButton  disabled={ Object.keys(tempvalueerr).length !== 0}   style={{padding:"5px"}} aria-label="" onClick={()=>fieldSubmit(i,i2)}  >
+                                        <IconButton type="submit"  disabled={ Object.keys(tempvalueerr).length !== 0}   style={{padding:"5px"}} aria-label="" onClick={()=>fieldSubmit(i,i2)}  >
                                           <DoneIcon></DoneIcon>
                                         </IconButton>
 

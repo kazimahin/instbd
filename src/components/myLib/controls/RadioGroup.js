@@ -20,7 +20,7 @@ export default function RadioGroup(props) {
                     )
                 }
             </MuiRadioGroup>
-            <p style={{color:"#f44336",float:"left" ,fontSize:"0.75rem"}}>{error && error}</p>
+            <p className="short_error">{error && error}</p>
 
         </FormControl>
     )

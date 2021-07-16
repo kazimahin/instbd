@@ -5,14 +5,23 @@ export default function MSelectInput(props) {
 
     const { name, label, value,error=null, onChange, variant, ...other } = props;
     return (
-        <TextField
-            variant={variant ? variant :"standard"}
-            label={label}
-            name={name}
-            value={value}
-            onChange={onChange}
-            {...other}
-            {...(error && {error:true,helperText:error})}
-        />
+        <>
+            <TextField
+            
+                variant={variant ? variant :"standard"}
+                label={label}
+                name={name}
+                value={value}
+                onChange={onChange}
+                {...other}
+                // {...(error && {error:true,helperText:error})}
+            />
+            <p className="short_error">{error && error}</p>
+
+                        
+                        
+        
+        </>
+
     )
 }

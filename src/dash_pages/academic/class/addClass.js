@@ -3,10 +3,11 @@ import { Group, MarkunreadSharp, PhotoCamera } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import {MAccordingDetails, Mclip, MDatePicker, MForm, MInput, Mmenu, MMonthPicker, MRadio,MSelect,MSnackbar} from "../../../components/myLib"
+import {MAccordingDetails, Mclip, MDatePicker, MForm, MInput, Mmenu, MMonthPicker, MRadio,MSelect,MselectSearch,MSnackbar} from "../../../components/myLib"
 import WebBasic from "../../../redux/actions/WebBasic.action"
 import AddIcon from '@material-ui/icons/Add';
 import { sub } from 'date-fns'
+import { objectToSelectValue } from '../../../functions'
 // name ,qualification ,birth ,phone ,phone2 ,email ,nid ,nationality ,gender ,religion ,blood ,p_address ,p_city ,p_zip ,c_address ,c_city ,c_zip ,password ,
 //subject, designation ,startdate, sallary ,f_name,f_nid,f_nationality ,m_name ,m_nid ,m_nationality ,f_phone,m_phone  
 
@@ -40,6 +41,24 @@ function AddClass(props) {
         })
     },[])
 
+    
+
+    const [fetchData, setfetchData] = useState({
+        subject:[],
+        teacher:[],
+        session:[]
+    })
+
+    useEffect( async ()=>{
+
+        let object = {
+            session: await objectToSelectValue("academic","session"),
+            teacher: await objectToSelectValue("user","employee"),
+        }
+ 
+        setfetchData({...fetchData,session:object.session,teacher:object.teacher})
+
+    },[])
 
 
     const initialFValues = {
@@ -356,30 +375,37 @@ function AddClass(props) {
      
                     <Grid item xs={12} sm={4} >
 
-                        <MInput
+                        <MselectSearch 
                             label="Class Teacher"
                             name="teacher"
                             value={Value.teacher}
                             onChange={handleInputChange}
+                            options={fetchData.teacher}
+
                             error={Errors.teacher}
                             id={1}
                         >
-                        </MInput>
+                        </MselectSearch>
                     </Grid>
      
+             
                     <Grid item xs={12} sm={4} >
-
-                        <MInput
+                        <MselectSearch 
                             label="Session"
                             name="session"
                             value={Value.session}
                             onChange={handleInputChange}
+                            options={fetchData.session}
                             error={Errors.session}
                             id={3}
+ 
                         >
-                        </MInput>
+                        </MselectSearch>
                     </Grid>
-                 
+                    
+ 
+
+
                     <Grid item xs={12} sm={12} >
 
                         <Typography display="inline" variant="h6" color="initial">Add Group</Typography>
@@ -442,6 +468,20 @@ function AddClass(props) {
                                                   >
                                                 </MInput>
                                             </Grid>
+
+                                            <Grid item xs={12} sm={4} >
+
+                                                <MselectSearch
+                                                    label="Group Teacher"
+                                                    name="teacher"
+                                                    options={fetchData.teacher}
+                                                    value={Value.group[i].teacher}
+                                                    onChange={(e)=>valueChangeGroup(e,i)}
+                                                    error={Errors.group[i].fees && Errors.group[i].teacher}
+                                                  >
+                                                </MselectSearch>
+                                            </Grid>
+
 
 
                                             <Grid item xs={12} sm={4} >

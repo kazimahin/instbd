@@ -1,8 +1,8 @@
-import { Button, CircularProgress, Grid, Typography } from '@material-ui/core'
+import { Button, CircularProgress, Grid, InputAdornment, Typography } from '@material-ui/core'
 import { MarkunreadSharp } from '@material-ui/icons'
 import axios from 'axios'
-import React, { useState } from 'react'
-import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,MSelect,MSnackbar,MuseForm} from "../../../components/myLib"
+import React, { useEffect, useState } from 'react'
+import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,MselectSearch,MSnackbar,MuseForm} from "../../../components/myLib"
 
 // name ,qualification ,birth ,phone ,phone2 ,email ,nid ,nationality ,gender ,religion ,blood ,p_address ,p_city ,p_zip ,c_address ,c_city ,c_zip ,password ,
 //subject, designation ,startdate, sallary ,f_name,f_nid,f_nationality ,m_name ,m_nid ,m_nationality ,f_phone,m_phone  
@@ -54,6 +54,27 @@ function AddEmployee(props) {
     const [message,setmessage] = useState()
 
          
+    const [fetchData, setfetchData] = useState({
+        subject:[],
+        teacher:[]
+    })
+
+    useEffect(()=>{
+        axios.get("http://origin.demo.com/api/web/const/subject")
+            .then(v=>{
+                setfetchData({...fetchData,subject:v.data.value})
+            })
+            .catch(e=>{
+                setmessage({status:e.response.status ,message:"Server Error Occured"})
+            })
+
+
+    },[])
+
+
+
+
+
      
     const handleSubmit = e => {
 
@@ -132,7 +153,7 @@ function AddEmployee(props) {
                     </Grid>
 
                     <Grid item xs={12} sm={3} >
-                        <MSelect 
+                        <MselectSearch 
                             label="Designation"
                             name="designation"
                             value={values.designation}
@@ -146,7 +167,7 @@ function AddEmployee(props) {
                         
                             ]}
                         >
-                        </MSelect>
+                        </MselectSearch>
                 </Grid>
 
                     <Grid item xs={12} sm={4} >
@@ -163,7 +184,7 @@ function AddEmployee(props) {
                     </Grid>
                     
                     <Grid item xs={12} sm={4} >
-                        <MSelect 
+                        <MselectSearch 
                             label="Religion"
                             name="religion"
                             value={values.religion}
@@ -176,11 +197,11 @@ function AddEmployee(props) {
                                 {value:"Christianity",title:"Christianity"},
                             ]}
                         >
-                        </MSelect>
+                        </MselectSearch>
                     </Grid>
 
                     <Grid item xs={12} sm={4} >
-                        <MSelect 
+                        <MselectSearch 
                             label="Blood"
                             name="blood"
                             value={values.blood}
@@ -199,7 +220,7 @@ function AddEmployee(props) {
                                 
                             ]}
                         >
-                        </MSelect>
+                        </MselectSearch>
                     </Grid>
                                         
                     <Grid item xs={12} sm={8} >
@@ -517,21 +538,24 @@ function AddEmployee(props) {
                             value={values.sallary}
                             onChange={handleInputChange}
                             error={errors.sallary}
-                            type="number"
-                        >
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">Tk</InputAdornment>,
+                              }}
+                            type="number"                        >
                         </MInput>
                     </Grid>
                         
                     <Grid item xs={12} sm={4} >
-                        <MInput 
+                        <MselectSearch 
                             name="subject"
                             label="Subject (optional)"
+                            options={fetchData.subject}
                             value={values.subject}
                             onChange={handleInputChange}
                             error={errors.subject}
                             
                         >
-                        </MInput>
+                        </MselectSearch>
                     </Grid>
                         
                 </Grid>

@@ -1,8 +1,8 @@
-import { Button, CircularProgress, FormControl, Grid, Typography } from '@material-ui/core'
+import { Button, CircularProgress, FormControl, Grid, InputAdornment, Typography } from '@material-ui/core'
 import { MarkunreadSharp } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useState } from 'react'
-import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,MSelect,MSnackbar,MuseForm} from "../../../components/myLib"
+import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,MselectSearch,MSnackbar,MuseForm} from "../../../components/myLib"
 
 // name ,qualification ,birth ,phone ,phone2 ,email ,nid ,nationality ,gender ,religion ,blood ,p_address ,p_city ,p_zip ,c_address ,c_city ,c_zip ,password ,
 //subject, designation ,startdate, sallary ,f_name,f_nid,f_nationality ,m_name ,m_nid ,m_nationality ,f_phone,m_phone  
@@ -184,8 +184,10 @@ function AddParents(props) {
                             value={values.f_salary}
                             onChange={handleInputChange}
                             error={errors.f_salary}
-                            type="number"
- 
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">Tk</InputAdornment>,
+                              }}
+                            type="number" 
                         >
                         </MInput>
                     </Grid>
@@ -301,7 +303,9 @@ function AddParents(props) {
                             onChange={handleInputChange}
                             error={errors.m_salary}
                             type="number"
- 
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">Tk</InputAdornment>,
+                              }}
                         >
                         </MInput>
                     </Grid>

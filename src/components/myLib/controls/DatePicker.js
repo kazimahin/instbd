@@ -22,8 +22,10 @@ export default function DatePicker(props) {
                 value={value}
                 onChange={date =>onChange(convertToDefEventPara(name,date))}
                 {...other}
-                {...(error && {error:true,helperText:error})}
+                // {...(error && {error:true,helperText:error})}
             />
+            <p className="short_error">{error && error}</p>
+
         </MuiPickersUtilsProvider>
     )
 }

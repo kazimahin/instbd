@@ -1,8 +1,9 @@
-import { Button, CircularProgress, FormControl, Grid, Typography } from '@material-ui/core'
+import { Button, CircularProgress, FormControl, Grid, InputAdornment, Typography } from '@material-ui/core'
 import { MarkunreadSharp } from '@material-ui/icons'
 import axios from 'axios'
-import React, { useState } from 'react'
-import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,MSelect,MSnackbar,MuseForm} from "../../../components/myLib"
+import React, { useEffect, useState } from 'react'
+import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,MselectSearch,MSnackbar,MuseForm} from "../../../components/myLib"
+import { objectToSelectValue } from '../../../functions'
 
  
 const initialFValues =  
@@ -13,17 +14,17 @@ const initialFValues =
         name:"",
         email:"",
         phone:"",
-        birth:"",
+        birth:new Date(),
         height:"",
         weight:"",
         blood:"",
         religion:"",
-        admission:"",
-        nationality:"",
+        admission:new Date(),
+        nationality:"Bangladeshi",
         nid:"",
-        gender:"",
+        gender:"male",
         
-        live:"", 
+        live:"f", 
         address:"", 
  
         parents:"",
@@ -43,7 +44,17 @@ function AddStudent(props) {
     const [loading1,setloading1] = useState(false)
     const [message,setmessage] = useState()
 
-         
+                  
+    const [fetchData, setfetchData] = useState({
+        subject:[],
+        teacher:[],
+        parents:[]
+    })
+
+    useEffect(async ()=>{
+       setfetchData({...fetchData,parents:await objectToSelectValue( "user","parents")}) 
+    },[])
+
      
     const handleSubmit = e => {
 
@@ -155,18 +166,19 @@ function AddStudent(props) {
 
                     <Grid item xs={12} sm={4} >
 
-                        <MInput 
+                        <MDatePicker
                             label="Date Of Birth"
                             name="birth"
                             value={values.birth}
                             onChange={handleInputChange}
                             error={errors.birth}
 
-                        />
+                        >
+                        </MDatePicker>
                     </Grid>
                     
                     <Grid item xs={12} sm={4} >
-                        <MSelect 
+                        <MselectSearch 
                             label="Religion"
                             name="religion"
                             value={values.religion}
@@ -179,12 +191,12 @@ function AddStudent(props) {
                                 {value:"Christianity",title:"Christianity"},
                             ]}
                         >
-                        </MSelect>
+                        </MselectSearch>
                     </Grid>
 
 
                     <Grid item xs={12} sm={4} >
-                        <MSelect
+                        <MselectSearch
                             label="Blood"
                             name="blood"
                             value={values.blood}
@@ -203,7 +215,7 @@ function AddStudent(props) {
                                 
                             ]}
                         >
-                        </MSelect>
+                        </MselectSearch>
                     </Grid>
                          
  
@@ -218,7 +230,10 @@ function AddStudent(props) {
                             value={values.height}
                             onChange={handleInputChange}
                             error={errors.height}
- 
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">In</InputAdornment>,
+                              }}
+                            type="number"
                         >
                         </MInput>
                     </Grid>
@@ -234,7 +249,10 @@ function AddStudent(props) {
                             value={values.weight}
                             onChange={handleInputChange}
                             error={errors.weight}
- 
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
+                              }}
+                            type="number"
                         >
                         </MInput>
                     </Grid>
@@ -275,29 +293,29 @@ function AddStudent(props) {
 
 
                     <Grid item xs={12} sm={4} >
-                        <MInput 
+                        <MselectSearch 
                             label="Parents ID"
                             name="parents"
                             value={values.parents}
+                            options={fetchData.parents}
                             onChange={handleInputChange}
                             error={errors.parents}
  
                         >
-                        </MInput>
+                        </MselectSearch>
                     </Grid>
                     
  
 
                     <Grid item xs={12} sm={4} >
-                        <MInput 
-                            label="Admission On"
-                            name="admission"
-                            value={values.admission}
-                            onChange={handleInputChange}
-                            error={errors.admission}
- 
-                        >
-                        </MInput>
+                        <MMonthPicker 
+                                name="admission"
+                                label="Admission Date"
+                                value={values.admission}
+                                onChange={handleInputChange}
+                                error={errors.admission}
+                            >
+                        </MMonthPicker>
                     </Grid>
                     
 

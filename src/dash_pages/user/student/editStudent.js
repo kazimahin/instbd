@@ -1,8 +1,9 @@
-import { Button, CircularProgress, Grid, Typography } from '@material-ui/core'
+import { Button, CircularProgress, Grid, InputAdornment, Typography } from '@material-ui/core'
 import { MarkunreadSharp } from '@material-ui/icons'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,MSelect,MSnackbar,MuseForm} from "../../../components/myLib"
+import {MDatePicker, MForm, MInput, MMonthPicker, MRadio,MselectSearch,MSnackbar,MuseForm} from "../../../components/myLib"
+import { objectToSelectValue } from '../../../functions'
 
 // name ,qualification ,birth ,phone ,phone2 ,email ,nid ,nationality ,gender ,religion ,blood ,p_address ,p_city ,p_zip ,c_address ,c_city ,c_zip ,password 
 
@@ -49,7 +50,17 @@ function EditStudent(props) {
     const [loading1,setloading1] = useState(true)
     const [message,setmessage] = useState()
  
-         
+                           
+    const [fetchData, setfetchData] = useState({
+        subject:[],
+        teacher:[],
+        parents:[]
+    })
+
+    useEffect(async ()=>{
+       setfetchData({...fetchData,parents:await objectToSelectValue( "user","parents")}) 
+    },[])
+
     useEffect(()=>{
 
 
@@ -107,6 +118,9 @@ function EditStudent(props) {
         handleInputChange,
         resetForm
     } = MuseForm(initialFValues)
+
+
+    console.log(values)
 
     return (
     < >
@@ -175,20 +189,22 @@ function EditStudent(props) {
                         />
                     </Grid>
 
+                   
                     <Grid item xs={12} sm={4} >
 
-                        <MInput 
+                        <MDatePicker
                             label="Date Of Birth"
                             name="birth"
                             value={values.birth}
                             onChange={handleInputChange}
                             error={errors.birth}
 
-                        />
+                        >
+                        </MDatePicker>
                     </Grid>
                     
                     <Grid item xs={12} sm={4} >
-                        <MSelect 
+                        <MselectSearch 
                             label="Religion"
                             name="religion"
                             value={values.religion}
@@ -200,13 +216,15 @@ function EditStudent(props) {
                                 {value:"Buddhism",title:"Buddhism"},
                                 {value:"Christianity",title:"Christianity"},
                             ]}
+                            // key={Math.random()}
+
                         >
-                        </MSelect>
+                        </MselectSearch>
                     </Grid>
 
 
                     <Grid item xs={12} sm={4} >
-                        <MSelect
+                        <MselectSearch
                             label="Blood"
                             name="blood"
                             value={values.blood}
@@ -224,8 +242,9 @@ function EditStudent(props) {
                                 {value:"unknown",title:"unknown"},
                                 
                             ]}
+                            // key={Math.random()}
                         >
-                        </MSelect>
+                        </MselectSearch>
                     </Grid>
                          
  
@@ -240,7 +259,10 @@ function EditStudent(props) {
                             value={values.height}
                             onChange={handleInputChange}
                             error={errors.height}
- 
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">In</InputAdornment>,
+                              }}
+                            type="number"
                         >
                         </MInput>
                     </Grid>
@@ -256,7 +278,10 @@ function EditStudent(props) {
                             value={values.weight}
                             onChange={handleInputChange}
                             error={errors.weight}
- 
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
+                              }}
+                            type="number"
                         >
                         </MInput>
                     </Grid>
@@ -297,31 +322,33 @@ function EditStudent(props) {
 
 
                     <Grid item xs={12} sm={4} >
-                        <MInput 
+                        <MselectSearch 
                             label="Parents ID"
                             name="parents"
                             value={values.parents}
+                            options={fetchData.parents}
                             onChange={handleInputChange}
                             error={errors.parents}
- 
+                            // key={Math.random()}
                         >
-                        </MInput>
+                        </MselectSearch>
                     </Grid>
                     
  
 
+
                     <Grid item xs={12} sm={4} >
-                        <MInput 
-                            label="Admission On"
-                            name="admission"
-                            value={values.admission}
-                            onChange={handleInputChange}
-                            error={errors.admission}
- 
-                        >
-                        </MInput>
+                        <MMonthPicker 
+                                name="admission"
+                                label="Admission Date"
+                                value={values.admission}
+                                onChange={handleInputChange}
+                                error={errors.admission}
+                            >
+                        </MMonthPicker>
                     </Grid>
                     
+
 
 
 
