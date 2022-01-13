@@ -20,7 +20,7 @@ const style = makeStyles(theme=>({
     
  },
  name:{
-   flexGrow:1,
+    
    textDecoration:"none",
    color:"inherit"
  }
@@ -72,7 +72,9 @@ function Topbar(props) {
 
               
       
+         <div style={{flexGrow:"1"}}>
 
+         </div>
 
           {/* right menu  */}
 

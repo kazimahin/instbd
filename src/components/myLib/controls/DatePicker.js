@@ -1,8 +1,25 @@
 import React from 'react'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { makeStyles } from '@material-ui/core';
 
 export default function DatePicker(props) {
+
+    const useStyle = makeStyles((theme)=>({
+        input:{
+
+            "& .MuiFormLabel-root":{
+                transform:"translate(0, 1.5px) scale(0.75)",
+                transformOrigin:"top left"
+            }
+            
+           
+        }
+    }))
+
+
+    const classes = useStyle()
+
 
     const { name, label, value, onChange ,variant ,error = null,...other} = props
 
@@ -22,6 +39,8 @@ export default function DatePicker(props) {
                 value={value}
                 onChange={date =>onChange(convertToDefEventPara(name,date))}
                 {...other}
+                
+                className={value && classes.input}
                 // {...(error && {error:true,helperText:error})}
             />
             <p className="short_error">{error && error}</p>

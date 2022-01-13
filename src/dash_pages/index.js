@@ -17,4 +17,9 @@ import Parents from "./user/parents"
 
 
 
- export default {Dashbord,Admin ,Parents,Subject,Class:Class_,Event,Notice,Student ,Employee ,Syllabus,Session ,Notice,Event ,Routine}
+import Exam from "./exam/exam"
+import Result from "./exam/result"
+
+
+
+ export default {Dashbord,Admin ,Parents,Subject,Class:Class_,Event,Notice,Student ,Employee ,Syllabus,Session ,Notice,Event ,Routine,Exam,Result}

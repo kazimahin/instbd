@@ -36,12 +36,13 @@ export  function MAccordingDetails(props) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
           id="panel1c-header"
+          style={{background:props.headerBG && props.headerBG}}
         >
           {props.header}
         </AccordionSummary>
         <Divider />
 
-        <AccordionDetails className={classes.details}>
+        <AccordionDetails className={classes.details} style={{background:props.contentBG && props.contentBG}} >
 
           {props.children}
            
@@ -49,7 +50,7 @@ export  function MAccordingDetails(props) {
         
      
 
-        {props.button && <> <Divider /><Divider /><Divider /><Divider /><Divider /> <AccordionActions> {props.button} </AccordionActions> </>}
+        {props.button && <> <Divider /><Divider /><Divider /><Divider /><Divider /> <AccordionActions style={{background:props.buttonBG && props.buttonBG}}> {props.button} </AccordionActions> </>}
       </Accordion>
     </div>
   );

@@ -7,7 +7,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function SelectSearch(props) {
 
-     const {options , onChange , label ,value ,error ,name ,variant} = props
+     const {options , onChange , label ,value ,error , ...other} = props
 
  
      let valuex = {}
@@ -55,6 +55,11 @@ export default function SelectSearch(props) {
         onChange(params)
     }
 
+
+ 
+
+      
+
      return (
          <>
              <Autocomplete
@@ -64,10 +69,12 @@ export default function SelectSearch(props) {
                 options={options}
                 getOptionLabel={(option) => option.title  ? option.title : ""}
                  
-                renderInput={(params) =><>    <TextField {...params} disableAnimation label="asdf" variant="standard" /></>}
+                renderInput={(params) =><>    <TextField {...params} disableAnimation label={label} variant="standard" /></>}
                 onChange={(e,value)=>ChangeValueToTarget(e,value ? value : "")}
                   
                 value={ valuex }
+                {...other}
+                
                  
                   
             />

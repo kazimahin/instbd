@@ -19,18 +19,78 @@ const Section=["default","A","B"]
 
 
 
+const initialFValues = {
+
+    name :null,
+    teacher:null,
+    session:null,
+    group:[
+        {
+            name:"default",
+            teacher:null,
+            fees:null,
+            subject:[],
+            section:[
+                {
+                    name:"default",
+                    teacher:null,
+                    routine:null
+                    // students:[]
+                }
+            ]
+        }
+    ]
+
+}
+
+const initialEValues = {
+
+    name :null,
+    teacher:null,
+    session:null,
+    group:[
+        {
+            name:"default",
+            teacher:null,
+            fees:null,
+            subject:[],
+            section:[
+                {
+                    name:"default",
+                    teacher:null,
+                    routine:null
+                    // students:[]
+                }
+            ]
+        }
+    ]
+
+}
+
 
 function AddClass(props) {
 
     const [subjects, setsubjects] = useState([])
 
-    useEffect(()=>{
+    const [fetchData, setfetchData] = useState({
+        subject:[],
+        teacher:[],
+        session:[],
+        routine:[]
+    })
+
+
+
+    useEffect(async()=>{
 
         axios.get("/api/web/const/subject")
         .then(v=>{
             
-            
-            setsubjects([...v.data.value])
+            setfetchData({
+                ...fetchData,
+                subject:[...v.data.value]
+            })
+             
         })
         .catch(e=>{
 
@@ -39,75 +99,24 @@ function AddClass(props) {
  
             
         })
-    },[])
 
-    
 
-    const [fetchData, setfetchData] = useState({
-        subject:[],
-        teacher:[],
-        session:[]
-    })
 
-    useEffect( async ()=>{
 
         let object = {
             session: await objectToSelectValue("academic","session"),
             teacher: await objectToSelectValue("user","employee"),
+            routine: await objectToSelectValue("academic","routine"),
         }
  
-        setfetchData({...fetchData,session:object.session,teacher:object.teacher})
+        setfetchData({...fetchData,...object})
 
     },[])
 
+    
+ 
 
-    const initialFValues = {
 
-        name :null,
-        teacher:null,
-        session:null,
-        group:[
-            {
-                name:"default",
-                teacher:null,
-                fees:null,
-                subject:[],
-                section:[
-                    {
-                        name:"default",
-                        teacher:null,
-                        // rutine
-                        // students:[]
-                    }
-                ]
-            }
-        ]
-    
-    }
-    const initialErrorvalue = {
-    
-        name :null,
-        teacher:null,
-        session:null,
-        group:[
-            {
-                name:"default",
-                teacher:null,
-                fees:null,
-                subject:[],
-                section:[
-                    {
-                        name:"default",
-                        teacher:null,
-                        // rutine
-                        // students:[]
-                    }
-                ]
-            }
-        ]
-    
-    }
-    
     
     const dispatch = useDispatch()
 
@@ -115,7 +124,7 @@ function AddClass(props) {
     const [message,setmessage] = useState()
 
     const [Value, setValue] = useState(initialFValues )
-    const [Errors, setErrors] = useState(initialErrorvalue)
+    const [Errors, setErrors] = useState(initialEValues)
  
      
     const handleSubmit = e => {
@@ -199,7 +208,7 @@ function AddClass(props) {
                 {
                     name:"default",
                     teacher:"",
-                    // rutine
+                    routine:""
                     // students:[]
                 }
             ]
@@ -251,6 +260,7 @@ function AddClass(props) {
         Value.group[i].section.push({
             name:e.target.name,
             teacher:"",
+            routine:""
         })
 
         let newSection =  Value.group[i].section.filter(section => section.name != "default")
@@ -303,7 +313,7 @@ function AddClass(props) {
         var newSection = Value.group[gi].section.filter((v,i)=> i!== si )
 
 
-        newSection.length == 0 &&( newSection = [ { name:"default", teacher:"" } ])
+        newSection.length == 0 &&( newSection = [ { name:"default", teacher:"" , routine:"" } ])
 
         Value.group[gi].section = newSection
 
@@ -357,7 +367,7 @@ function AddClass(props) {
                 <Grid container   >
                     
                     <Grid item xs={12} sm={12} >
-                        <Typography display="inline" variant="h6" color="initial">Personal Details</Typography>
+                        <Typography display="inline" variant="h6" color="initial">Class Information</Typography>
                     </Grid>
 
                     <Grid item xs={12} sm={4} >
@@ -457,18 +467,7 @@ function AddClass(props) {
                                                                                         
                                         <Grid container>
 
-                                            <Grid item xs={12} sm={4} >
-
-                                                <MInput
-                                                    label="Group Teacher"
-                                                    name="teacher"
-                                                    value={Value.group[i].teacher}
-                                                    onChange={(e)=>valueChangeGroup(e,i)}
-                                                    // error={Errors.group[i].teacher && Errors.group[i].teacher}
-                                                  >
-                                                </MInput>
-                                            </Grid>
-
+                            
                                             <Grid item xs={12} sm={4} >
 
                                                 <MselectSearch
@@ -477,7 +476,7 @@ function AddClass(props) {
                                                     options={fetchData.teacher}
                                                     value={Value.group[i].teacher}
                                                     onChange={(e)=>valueChangeGroup(e,i)}
-                                                    error={Errors.group[i].fees && Errors.group[i].teacher}
+                                                    error={Errors.group[i].teacher && Errors.group[i].teacher}
                                                   >
                                                 </MselectSearch>
                                             </Grid>
@@ -498,38 +497,14 @@ function AddClass(props) {
                                             </Grid>
 
 
-                                            <Grid item xs={12} sm={4} >
-
-                                                {/* <MInput
-                                                    label="Session"
-                                                    name="session"
-                                                    // value={Value.session}
-                                                    // onChange={handleInputChange}
-                                                    // error={Errors.session}
-                                                    // id={3}
-                                                >
-                                                </MInput> */}
-                                            </Grid>
-
+                         
                                             
 
                                             <Grid item xs={12} sm={4}  >
-                                                {/* <div style={{margin:"8px 16px"}}>
-                                                    <Mclip 
-                                                        
-                                                        button={<div style={{color:"#939393",fontFamily:"'Roboto', 'Helvetica', 'Arial' ",fontWeight:"400"}}>Add Clip<IconButton color="" aria-label="upload picture" component="span"> <  AddIcon /> </IconButton></div>}
-                                                        names={subjects}
-                                                        value={Value.group[i].subject}
-                                                        setValue={(val)=>setSubject(i,val)}
-                                                        error={Errors.group[i].subject}
-                                                        // showAvatar 
-                                                    ></Mclip>
-                                                    
-
-                                                </div> */}
+                      
                                                 <Mclip
-                                                    label="Demo"
-                                                    options={subjects}
+                                                    label="Subjects"
+                                                    options={fetchData.subject}
                                                     value={Value.group[i].subject}
                                                     onChange={(e,value)=>setSubject(e,value,i)}
                                                     error={Errors.group[i].subject}
@@ -596,18 +571,28 @@ function AddClass(props) {
                                                                         <Grid container>
                                                                             
                                                                             <Grid item xs={12} sm={4} >
-                                                                                <MInput
+                                                                
+                                                                                <MselectSearch
                                                                                     label="Section Teacher"
                                                                                     name="teacher"
+                                                                                    options={fetchData.teacher}
                                                                                     value={Value.group[i].section[si].teacher}
                                                                                     onChange={(e)=>valueChangeSection(e,i,si)}
                                                                                     error={Errors.group[i].section[si].teacher && Errors.group[i].section[si].teacher}
                                                                                  >
-                                                                                </MInput>
+                                                                                </MselectSearch>
                                                                             </Grid>
 
                                                                             <Grid item xs={12} sm={4} >
-                                                                                rutine
+                                                                                <MselectSearch
+                                                                                    label="Section Routine"
+                                                                                    name="routine"
+                                                                                    options={fetchData.routine}
+                                                                                    value={Value.group[i].section[si].routine}
+                                                                                    onChange={(e)=>valueChangeSection(e,i,si)}
+                                                                                    error={Errors.group[i].section[si].routine && Errors.group[i].section[si].routine}
+                                                                                 >
+                                                                                </MselectSearch>
                                                                             </Grid>
 
                                                                             <Grid item xs={12} sm={4} >
