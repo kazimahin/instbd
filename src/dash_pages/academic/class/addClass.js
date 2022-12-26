@@ -12,7 +12,7 @@ import { objectToSelectValue } from '../../../functions'
 //subject, designation ,startdate, sallary ,f_name,f_nid,f_nationality ,m_name ,m_nid ,m_nationality ,f_phone,m_phone  
 
 
-const Groups=["default","scieance","arts"]
+const Groups=["default","scieance","arts","commerce"]
 const Section=["default","A","B"]
 
 // let recoverGroup = []
@@ -83,12 +83,26 @@ function AddClass(props) {
 
     useEffect(async()=>{
 
-        axios.get("/api/web/const/subject")
-        .then(v=>{
-            
+
+       
+ 
+ 
+
+       await axios.get("/api/web/const/subject")
+        .then(async v=>{
+
+            let object = {
+                session: await objectToSelectValue("academic","session"),
+                teacher: await objectToSelectValue("user","employee"),
+                routine: await objectToSelectValue("academic","routine"),
+            }
+
+
             setfetchData({
                 ...fetchData,
-                subject:[...v.data.value]
+                
+                subject:[...v.data.value],
+                ...object
             })
              
         })
@@ -102,20 +116,11 @@ function AddClass(props) {
 
 
 
-
-        let object = {
-            session: await objectToSelectValue("academic","session"),
-            teacher: await objectToSelectValue("user","employee"),
-            routine: await objectToSelectValue("academic","routine"),
-        }
- 
-        setfetchData({...fetchData,...object})
-
     },[])
 
     
  
-
+ 
 
     
     const dispatch = useDispatch()
@@ -363,7 +368,7 @@ function AddClass(props) {
         {(!message) && 
             
             <MForm style={{ visibility:loading1 && "hidden" , background:""}} onSubmit={handleSubmit}>
-                {console.log({Value,Errors})}
+                {console.log({Value,Errors,fetchData})}
                 <Grid container   >
                     
                     <Grid item xs={12} sm={12} >
@@ -503,6 +508,7 @@ function AddClass(props) {
                                             <Grid item xs={12} sm={4}  >
                       
                                                 <Mclip
+
                                                     label="Subjects"
                                                     options={fetchData.subject}
                                                     value={Value.group[i].subject}

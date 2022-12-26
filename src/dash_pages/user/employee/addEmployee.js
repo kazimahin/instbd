@@ -60,7 +60,7 @@ function AddEmployee(props) {
     })
 
     useEffect(()=>{
-        axios.get("http://origin.demo.com/api/web/const/subject")
+        axios.get("/api/web/const/subject")
             .then(v=>{
                 setfetchData({...fetchData,subject:v.data.value})
             })

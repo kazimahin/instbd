@@ -12,7 +12,7 @@ import { objectToSelectValue } from '../../../functions'
 //subject, designation ,startdate, sallary ,f_name,f_nid,f_nationality ,m_name ,m_nid ,m_nationality ,f_phone,m_phone  
 
 
-const Groups=["default","scieance","arts"]
+const Groups=["default","scieance","arts","commerce"]
 const Section=["default","A","B"]
 
 // let recoverGroup = []
@@ -23,9 +23,9 @@ const Section=["default","A","B"]
 const initialFValues = {
 
     name :null,
-   teacher:null,
-   session:null,
-   group:[
+    teacher:null,
+    session:null,
+    group:[
        {
            name:"default",
            teacher:null,

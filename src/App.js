@@ -69,7 +69,7 @@ class App extends Component {
               <ThemeProvider theme={theme}>
                     <Switch>
 
-
+                        {/* D mens dash T mens template */}
                    
                     <Route path="/d/"  > {this.props.r_state.UserAuth.auth?<DRoutes value={valueForDash}></DRoutes> :<Redirect to="/login"></Redirect>}  </Route> 
                     <TRoutes></TRoutes>
